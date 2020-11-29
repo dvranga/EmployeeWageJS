@@ -5,7 +5,7 @@ const FULL_TIME_HOURS=8;
 const WAGE_PER_HOUR=20;
 const NUM_OF_WORKING_DAYS=20;
 const MAX_HRS_IN_MONTH=160;
-let empArray=new Array();
+let empDailyWageArr=new Array();
 
 function getWorkingHours(empCheck){
     switch (empCheck){
@@ -31,18 +31,99 @@ while (totalEmpHrs <= MAX_HRS_IN_MONTH &&
     let empCheck=Math.floor(Math.random()*10)%3;
     let dailyWrkHrs= getWorkingHours(empCheck);
     totalEmpHrs+=dailyWrkHrs;
-    empArray.push(getEmpDailyWage(dailyWrkHrs));
+    empDailyWageArr.push(getEmpDailyWage(dailyWrkHrs));
+}
+//reduce method
+getEmpWage=(totalWage,dailyWage)=>{
+    return totalWage+dailyWage;
+}
+console.log(empDailyWageArr.reduce(getEmpWage));
+
+//for loop
+let totalWage =0;
+const getEmpWage1=()=>{
+    for(let wage of empDailyWageArr) totalWage+=wage;
+    return totalWage;
+}
+console.log('total wage : ',getEmpWage1())
+   
+
+//show day wage 
+let count=0;
+ const showDailyWages=(dailyWage)=>{
+     count++;
+    return count+" - "+dailyWage;
 }
 
-let empWage=0;
-for(let dailyWage of empArray) empWage+=dailyWage;
+let dailyWagesMapArr=empDailyWageArr.map(showDailyWages);
+console.log('dailyWagesMapArr',dailyWagesMapArr);
 
-empWage=getEmpDailyWage(totalEmpHrs);
-console.log("Total Days: ",totalWorkingDays
-        ,"  Total Hrs: ",totalEmpHrs," Emp Wage: ",empWage);
+//max wage 160
+const showWageMax=(dailyWage)=>{
+    return dailyWage.includes("160");
+}
+
+let showMaxWages=dailyWagesMapArr.filter(showWageMax)
+console.log(showMaxWages);
+
+//full wage time earned first occurenace
+const showFullWageEarned=(dailyWage)=>{
+   return dailyWage.includes("160");
+}
 
 
-// for (let day = 0; day < NUM_OF_WORKING_DAYS; day++) {
-//     let empCheck=Math.floor(Math.random()*10)%3;
-//     totalEmpHrs +=getWorkingHours(empCheck);    
-// }
+let fullWageEarned=dailyWagesMapArr.find(showFullWageEarned);
+console.log(fullWageEarned);
+
+//check showMaxWage truely holding the maximum wages
+const allMaxWages=(maxWage)=>{
+   return maxWage.includes("160");
+}
+let resultMaxWage=showMaxWages.every(allMaxWages)
+console.log(resultMaxWage);
+//minimum
+count1=0;
+const showAllWages=(dailyWage)=>{
+    count1++;
+    return count1+" - "+dailyWage;
+}
+
+let showNewDailyWages=empDailyWageArr.map(showAllWages);
+console.log(showNewDailyWages);
+//min wage
+const showMinWages=(allWages)=>{
+    return allWages.includes("80");
+}
+
+let minWageArr=showNewDailyWages.filter(showMinWages);
+console.log(minWageArr);
+
+//first min wage 
+const findFirstAccurence=(minWages)=>{
+    return minWages.includes("80");
+}
+
+let resultMinWage=minWageArr.find(findFirstAccurence);
+console.log(resultMinWage);
+
+//find all are minimum
+const checkMinimumWages=(minWage)=>{
+    return minWage.includes("80");
+}
+
+let checkMinWage=minWageArr.every(checkMinimumWages);
+console.log(checkMinWage);
+
+//some contains min wage
+let checkMin=showNewDailyWages.some(checkMinimumWages);
+console.log(checkMin);
+
+//number of days employee workedd
+
+const findWorkingDays=(workingDays,day)=>{
+    console.log(day,' day')
+   if(day>0) workingDays++; 
+   return workingDays;
+}
+let totalDays=empDailyWageArr.reduce(findWorkingDays,0);
+console.log('totalWorkingDays',totalDays);
