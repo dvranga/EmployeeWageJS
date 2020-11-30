@@ -1,10 +1,6 @@
 class EmployeePayrollData{
     //property
-    id;
-    salary;
-    gender;
-    startDate;
-    
+
 
 //constructor
     constructor(...params){
@@ -21,11 +17,56 @@ get name() {
 set name(name){
     let nameRegex=RegExp('^[A-Z]{1}[a-z]{3,}$');
     if(nameRegex.test(name)) {
-        console.log('setting',name)
          this._name=name;
         }
     else throw 'Name is Incorrect';
 }
+
+get id(){
+    return this._id;
+}
+set id(id){
+    let idRegex=RegExp('^[1-9][0-9]*$')
+    if(idRegex.test(id)){
+        this._id=id;
+    }
+    else throw 'Id is Incorrect';
+}
+
+get salary(){ return this._salary;}
+
+set salary(salary){
+    let salaryRegex=RegExp('^[1-9][0-9]*$')
+    if(salaryRegex.test(salary)){
+        this._salary=salary;
+    }
+    else throw 'salary is Incorrect';
+}
+
+get gender(){
+    return this._gender;
+}
+
+set gender(gender){
+    let genderRegex=RegExp('^(?:M|F)$')
+    if(genderRegex.test(gender)){
+        return this._gender=gender;
+    }
+    else throw 'gender is Incorrect';
+}
+
+// get startDate(){
+//     return this._startDate;
+// }
+
+// set startDate(date){
+//     if(date===Date()){
+//         this._date=date;
+//     }
+//     else{
+//         return 'date is Incorrect';
+//     }
+// }
 
 //method
 toString(){
@@ -50,5 +91,37 @@ try{
     console.error(e);
 }
 
-let newEmployeePayrollData=new EmployeePayrollData(1,"Terrisa",30000,"F",new Date());
+let newEmployeePayrollData=new EmployeePayrollData(1,"Terrisa",30000,"M",new Date());
 console.log(newEmployeePayrollData);
+
+//UC_14
+
+try{
+    employeePayrollData.id=0;
+    console.log(employeePayrollData.toString());
+}catch(e){
+    console.error(e);
+}
+
+let newEmployeePayrollData1=new EmployeePayrollData(1,"Terrisa",30000,"male",new Date());
+console.log(newEmployeePayrollData1);
+
+try{
+    employeePayrollData.gender="male";
+    console.log(employeePayrollData.toString());
+}catch(e){
+    console.error(e);
+}
+
+let newEmployeePayrollData2=new EmployeePayrollData(1,"terrisa",30000,"M",new Date());
+console.log(newEmployeePayrollData2);
+
+try{
+    employeePayrollData.salary=0;
+    console.log(employeePayrollData.toString());
+}catch(e){
+    console.error(e);
+}
+
+let newEmployeePayrollData3=new EmployeePayrollData(0,"Terrisa",0,"m",new Date());
+console.log(newEmployeePayrollData3);
